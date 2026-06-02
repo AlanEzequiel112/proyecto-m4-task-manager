@@ -1,18 +1,30 @@
 import { useState } from "react";
 import { loginUser } from "../features/auth/auth.service";
+import { getFirebaseAuthErrorMessage } from "../utils/firebaseErrors";
 
 export function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    await loginUser(email, password);
+    setErrorMessage("");
+    setIsSubmitting(true);
+
+    try {
+      await loginUser(email, password);
+    } catch (error) {
+      setErrorMessage(getFirebaseAuthErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <main>
+    <section>
       <h1>Iniciar sesión</h1>
 
       <form onSubmit={handleSubmit}>
@@ -21,6 +33,7 @@ export function LoginPage() {
           placeholder="Correo electrónico"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
+          required
         />
 
         <input
@@ -28,10 +41,15 @@ export function LoginPage() {
           placeholder="Contraseña"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
+          required
         />
 
-        <button type="submit">Entrar</button>
+        {errorMessage && <p>{errorMessage}</p>}
+
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Ingresando..." : "Entrar"}
+        </button>
       </form>
-    </main>
+    </section>
   );
 }
