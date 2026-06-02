@@ -3,6 +3,7 @@ import { DashboardPage } from "./pages/DashboardPage";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { useAuth } from "./hooks/useAuth";
+import { ProtectedRoute } from "./routes/ProtectedRoute";
 
 type Page = "login" | "register";
 
@@ -19,7 +20,11 @@ function App() {
   }
 
   if (user) {
-    return <DashboardPage />;
+    return (
+      <ProtectedRoute>
+        <DashboardPage />
+      </ProtectedRoute>
+    );
   }
 
   return (
