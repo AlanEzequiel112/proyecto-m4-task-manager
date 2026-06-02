@@ -8,15 +8,25 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!title.trim() || !description.trim()) return;
+    if (!title.trim()) {
+      setErrorMessage("El título es obligatorio.");
+      return;
+    }
 
+    if (!description.trim()) {
+      setErrorMessage("La descripción es obligatoria.");
+      return;
+    }
+
+    setErrorMessage("");
     setIsSubmitting(true);
 
-    await onAddTask(title, description);
+    await onAddTask(title.trim(), description.trim());
 
     setTitle("");
     setDescription("");
@@ -41,6 +51,8 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
         onChange={(event) => setDescription(event.target.value)}
         required
       />
+
+      {errorMessage && <p>{errorMessage}</p>}
 
       <button type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Guardando..." : "Crear tarea"}
