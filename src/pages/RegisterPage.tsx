@@ -29,11 +29,12 @@ export function RegisterPage() {
 
       <form onSubmit={handleSubmit}>
         <input
-          type="email"
-          placeholder="Correo electrónico"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          required
+         className="input"
+         type="email"
+         placeholder="Correo electrónico"
+         value={email}
+         onChange={(event) => setEmail(event.target.value)}
+         required
         />
 
         <input

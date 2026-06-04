@@ -46,10 +46,10 @@ describe("TaskList", () => {
     );
 
     expect(screen.getByText("Estudiar TypeScript")).toBeInTheDocument();
-    expect(screen.getByText("Estado: Pendiente")).toBeInTheDocument();
+    expect(screen.getByText("Pendiente")).toBeInTheDocument();
 
     expect(screen.getByText("Enviar proyecto")).toBeInTheDocument();
-    expect(screen.getByText("Estado: Completada")).toBeInTheDocument();
+    expect(screen.getByText("Completada")).toBeInTheDocument();
   });
 
   it("ejecuta acciones de completar y eliminar", async () => {
