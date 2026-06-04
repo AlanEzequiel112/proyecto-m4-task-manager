@@ -24,11 +24,12 @@ export function LoginPage() {
   };
 
   return (
-    <section>
+    <section className="auth-form-section">
       <h1>Iniciar sesión</h1>
 
       <form onSubmit={handleSubmit}>
         <input
+          className="input"
           type="email"
           placeholder="Correo electrónico"
           value={email}
@@ -37,6 +38,7 @@ export function LoginPage() {
         />
 
         <input
+          className="input"
           type="password"
           placeholder="Contraseña"
           value={password}
@@ -46,7 +48,7 @@ export function LoginPage() {
 
         {errorMessage && <p>{errorMessage}</p>}
 
-        <button type="submit" disabled={isSubmitting}>
+        <button className="btn-primary" type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Ingresando..." : "Entrar"}
         </button>
       </form>

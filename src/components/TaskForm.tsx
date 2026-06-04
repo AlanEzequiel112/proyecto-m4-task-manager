@@ -43,7 +43,6 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
         placeholder="Título"
         value={title}
         onChange={(event) => setTitle(event.target.value)}
-        required
       />
 
       <textarea
@@ -51,7 +50,6 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
         placeholder="Descripción"
         value={description}
         onChange={(event) => setDescription(event.target.value)}
-        required
       />
 
       {errorMessage && <p>{errorMessage}</p>}

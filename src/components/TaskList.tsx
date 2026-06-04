@@ -14,19 +14,39 @@ export function TaskList({ tasks, onToggleTask, onDeleteTask }: TaskListProps) {
   return (
     <ul className="task-list"> 
       {tasks.map((task) => (
-        <li className="task-card" key={task.id}>
-          <h3>{task.title}</h3>
-          <p>{task.description}</p>
-          <p>Estado: {task.completed ? "Completada" : "Pendiente"}</p>
+      <li className="task-card" key={task.id}>
+  <div className="task-header">
+    <h3>{task.title}</h3>
 
-          <button type="button" onClick={() => onToggleTask(task)}>
-            {task.completed ? "Marcar pendiente" : "Marcar completada"}
-          </button>
+    <span
+      className={
+        task.completed
+          ? "status-badge completed"
+          : "status-badge pending"
+      }
+    >
+      {task.completed ? "Completada" : "Pendiente"}
+    </span>
+  </div>
 
-          <button type="button" onClick={() => onDeleteTask(task.id)}>
-            Eliminar
-          </button>
-        </li>
+  <p>{task.description}</p>
+
+  <button
+    type="button"
+    onClick={() => onToggleTask(task)}
+  >
+    {task.completed
+      ? "Marcar pendiente"
+      : "Marcar completada"}
+  </button>
+
+  <button
+    type="button"
+    onClick={() => onDeleteTask(task.id)}
+  >
+    Eliminar
+  </button>
+</li>
       ))}
     </ul>
   );

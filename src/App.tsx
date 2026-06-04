@@ -28,20 +28,35 @@ function App() {
   }
 
   return (
-    <main>
+  <main className="auth-layout">
+    <section className="auth-card">
+      <div className="auth-header">
+        <h1>Task Manager</h1>
+        <p>Organizá tus pendientes de forma simple y segura.</p>
+      </div>
+
       {page === "login" ? <LoginPage /> : <RegisterPage />}
 
       {page === "login" ? (
-        <button type="button" onClick={() => setPage("register")}>
+        <button
+          className="link-button"
+          type="button"
+          onClick={() => setPage("register")}
+        >
           Crear cuenta
         </button>
       ) : (
-        <button type="button" onClick={() => setPage("login")}>
+        <button
+          className="link-button"
+          type="button"
+          onClick={() => setPage("login")}
+        >
           Ya tengo cuenta
         </button>
       )}
-    </main>
-  );
+    </section>
+  </main>
+);
 }
 
 export default App;

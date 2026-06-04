@@ -24,7 +24,7 @@ export function RegisterPage() {
   };
 
   return (
-    <section>
+    <section className="auth-form-section">
       <h1>Crear cuenta</h1>
 
       <form onSubmit={handleSubmit}>
@@ -37,6 +37,7 @@ export function RegisterPage() {
         />
 
         <input
+          className="input"
           type="password"
           placeholder="Contraseña"
           value={password}
@@ -47,7 +48,7 @@ export function RegisterPage() {
 
         {errorMessage && <p>{errorMessage}</p>}
 
-        <button type="submit" disabled={isSubmitting}>
+        <button className="btn-primary" type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Creando cuenta..." : "Registrarme"}
         </button>
       </form>
