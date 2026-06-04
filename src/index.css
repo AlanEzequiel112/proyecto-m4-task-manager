@@ -17,8 +17,35 @@
 body {
   margin: 0;
   font-family: Inter, system-ui, sans-serif;
-  background: var(--bg);
   color: var(--text);
+  background:
+    linear-gradient(
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle at top left,
+      rgba(124, 77, 255, 0.16),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(168, 85, 247, 0.12),
+      transparent 30%
+    ),
+    var(--bg);
+  background-size:
+    42px 42px,
+    42px 42px,
+    cover,
+    cover,
+    cover;
+  background-attachment: fixed;
 }
 
 .app-layout {
