@@ -53,11 +53,16 @@ export default async function handler(
 
     const taskList = body.tasks
       .map((task) => {
+        const icon = task.completed ? "✅" : "⏳";
         const status = task.completed ? "Completada" : "Pendiente";
 
-        return `- ${task.title}: ${status}\n  ${task.description}`;
+        return `${icon} ${task.title}
+
+Estado: ${status}
+
+${task.description}`;
       })
-      .join("\n\n");
+      .join("\n\n────────────────────\n\n");
 
     const command = new SendEmailCommand({
       Source: process.env.AWS_SES_FROM_EMAIL,
@@ -71,14 +76,18 @@ export default async function handler(
         },
         Body: {
           Text: {
-            Data: `Resumen de tareas
+            Data: `📋 Resumen de tareas
 
-Completadas: ${completedTasks}
-Pendientes: ${pendingTasks}
+✅ Completadas: ${completedTasks}
+⏳ Pendientes: ${pendingTasks}
 
-Detalle:
+────────────────────
 
-${taskList}`,
+${taskList}
+
+────────────────────
+
+Generado automáticamente por Task Manager`,
             Charset: "UTF-8",
           },
         },
