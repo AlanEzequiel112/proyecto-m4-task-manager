@@ -18,6 +18,7 @@ interface CreateTaskData {
   title: string;
   description: string;
   priority: "low" | "medium" | "high";
+  dueDate: string;
   userId: string;
 }
 
@@ -35,11 +36,11 @@ export const subscribeToUserTasks = (
     tasksQuery,
     (snapshot) => {
       const tasks = snapshot.docs.map((document) => ({
-  id: document.id,
-  ...document.data(),
-})) as Task[];
+        id: document.id,
+        ...document.data(),
+      })) as Task[];
 
-tasks.sort((a, b) => b.createdAt - a.createdAt);
+      tasks.sort((a, b) => b.createdAt - a.createdAt);
 
       onTasksChange(tasks);
     },
@@ -54,6 +55,7 @@ export const createTask = async (data: CreateTaskData) => {
     title: data.title,
     description: data.description,
     priority: data.priority,
+    dueDate: data.dueDate,
     userId: data.userId,
     completed: false,
     createdAt: Date.now(),

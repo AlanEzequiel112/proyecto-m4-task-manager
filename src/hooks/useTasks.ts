@@ -45,7 +45,8 @@ export const useTasks = () => {
   const addTask = async (
     title: string,
     description: string,
-    priority: "low" | "medium" | "high"
+    priority: "low" | "medium" | "high",
+    dueDate: string
   ) => {
     if (!user) return;
 
@@ -53,6 +54,7 @@ export const useTasks = () => {
       title,
       description,
       priority,
+      dueDate,
       userId: user.uid,
     });
   };

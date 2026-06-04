@@ -4,18 +4,20 @@ interface TaskFormProps {
   onAddTask: (
     title: string,
     description: string,
-    priority: "low" | "medium" | "high"
+    priority: "low" | "medium" | "high",
+    dueDate: string
   ) => Promise<void>;
 }
 
 export function TaskForm({ onAddTask }: TaskFormProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState<"low" | "medium" | "high">(
+    "medium"
+  );
+  const [dueDate, setDueDate] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [priority, setPriority] = useState<
-  "low" | "medium" | "high"
->("medium");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -33,14 +35,12 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
     setErrorMessage("");
     setIsSubmitting(true);
 
-    await onAddTask(
-       title.trim(),
-       description.trim(),
-       priority
-    );
+    await onAddTask(title.trim(), description.trim(), priority, dueDate);
 
     setTitle("");
     setDescription("");
+    setPriority("medium");
+    setDueDate("");
     setIsSubmitting(false);
   };
 
@@ -63,27 +63,28 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
         onChange={(event) => setDescription(event.target.value)}
       />
 
-       <select
-           className="input"
-           value={priority}
-           onChange={(event) =>
-         setPriority(
-             event.target.value as "low" | "medium" | "high"
-       )
-  }
->
-  <option value="low">Prioridad baja</option>
-  <option value="medium">Prioridad media</option>
-  <option value="high">Prioridad alta</option>
-</select>
+      <select
+        className="input"
+        value={priority}
+        onChange={(event) =>
+          setPriority(event.target.value as "low" | "medium" | "high")
+        }
+      >
+        <option value="low">Prioridad baja</option>
+        <option value="medium">Prioridad media</option>
+        <option value="high">Prioridad alta</option>
+      </select>
+
+      <input
+        className="input"
+        type="date"
+        value={dueDate}
+        onChange={(event) => setDueDate(event.target.value)}
+      />
 
       {errorMessage && <p>{errorMessage}</p>}
 
-       <button
-           className="btn-primary"
-           type="submit"
-           disabled={isSubmitting}
->
+      <button className="btn-primary" type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Guardando..." : "Crear tarea"}
       </button>
     </form>

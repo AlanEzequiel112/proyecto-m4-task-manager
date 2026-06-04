@@ -6,13 +6,38 @@ interface TaskListProps {
   onDeleteTask: (taskId: string) => Promise<void>;
 }
 
+interface TaskBadgesProps {
+  task: Task;
+}
+
 const getPriorityLabel = (priority?: Task["priority"]) => {
   if (priority === "high") return "Alta";
   if (priority === "low") return "Baja";
+
   return "Media";
 };
 
-export function TaskList({ tasks, onToggleTask, onDeleteTask }: TaskListProps) {
+function TaskBadges({ task }: TaskBadgesProps) {
+  const priorityClass = task.priority ?? "medium";
+  const statusClass = task.completed ? "completed" : "pending";
+  const statusLabel = task.completed ? "Completada" : "Pendiente";
+
+  return (
+    <div className="badge-group">
+      <span className={`priority-badge ${priorityClass}`}>
+        {getPriorityLabel(task.priority)}
+      </span>
+
+      <span className={`status-badge ${statusClass}`}>{statusLabel}</span>
+    </div>
+  );
+}
+
+export function TaskList({
+  tasks,
+  onToggleTask,
+  onDeleteTask,
+}: TaskListProps) {
   if (tasks.length === 0) {
     return <p>No tenés tareas creadas.</p>;
   }
@@ -23,23 +48,12 @@ export function TaskList({ tasks, onToggleTask, onDeleteTask }: TaskListProps) {
         <li className="task-card" key={task.id}>
           <div className="task-header">
             <h3>{task.title}</h3>
-
-            <div className="badge-group">
-              <span className={`priority-badge ${task.priority ?? "medium"}`}>
-                {getPriorityLabel(task.priority)}
-              </span>
-
-              <span
-                className={
-                  task.completed
-                    ? "status-badge completed"
-                    : "status-badge pending"
-                }
-              >
-                {task.completed ? "Completada" : "Pendiente"}
-              </span>
-            </div>
+            <TaskBadges task={task} />
           </div>
+
+          {task.dueDate && (
+            <p className="due-date">Fecha límite: {task.dueDate}</p>
+          )}
 
           <p>{task.description}</p>
 

@@ -21,11 +21,12 @@ describe("TaskForm", () => {
     expect(onAddTask).toHaveBeenCalledWith(
       "Tarea test",
       "Descripción test",
-      "medium"
+      "medium",
+      ""
     );
   });
 
-  it("envía la tarea con título, descripción y prioridad", async () => {
+  it("envía la tarea con título, descripción, prioridad y fecha", async () => {
     const user = userEvent.setup();
     const onAddTask = vi.fn().mockResolvedValue(undefined);
 
@@ -38,13 +39,15 @@ describe("TaskForm", () => {
     );
 
     await user.selectOptions(screen.getByRole("combobox"), "high");
+    await user.type(screen.getByDisplayValue(""), "2026-06-30");
 
     await user.click(screen.getByRole("button", { name: "Crear tarea" }));
 
     expect(onAddTask).toHaveBeenCalledWith(
       "Tarea test",
       "Descripción test",
-      "high"
+      "high",
+      "2026-06-30"
     );
   });
 });
