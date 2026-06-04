@@ -2,7 +2,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from "firebase/auth";
+
 import { auth } from "../../services/firebase";
 
 export const registerUser = async (email: string, password: string) => {
@@ -27,4 +30,15 @@ export const loginUser = async (email: string, password: string) => {
 
 export const logoutUser = async () => {
   await signOut(auth);
+};
+
+export const signInWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+
+  const userCredential = await signInWithPopup(
+    auth,
+    provider
+  );
+
+  return userCredential.user;
 };

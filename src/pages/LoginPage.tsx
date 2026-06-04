@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { loginUser } from "../features/auth/auth.service";
+import {
+  loginUser,
+  signInWithGoogle,
+} from "../features/auth/auth.service";
 import { getFirebaseAuthErrorMessage } from "../utils/firebaseErrors";
 
 export function LoginPage() {
@@ -20,6 +23,16 @@ export function LoginPage() {
       setErrorMessage(getFirebaseAuthErrorMessage(error));
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setErrorMessage("");
+
+    try {
+      await signInWithGoogle();
+    } catch (error) {
+      setErrorMessage(getFirebaseAuthErrorMessage(error));
     }
   };
 
@@ -50,6 +63,18 @@ export function LoginPage() {
 
         <button className="btn-primary" type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Ingresando..." : "Entrar"}
+        </button>
+
+        <div className="auth-divider">
+          <span>o</span>
+        </div>
+
+        <button
+          className="btn-secondary"
+          type="button"
+          onClick={handleGoogleLogin}
+        >
+          Continuar con Google
         </button>
       </form>
     </section>

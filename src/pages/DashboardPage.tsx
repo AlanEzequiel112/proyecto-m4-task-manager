@@ -93,7 +93,9 @@ export function DashboardPage() {
             Organizá tus tareas y mantené el control de tus pendientes.
           </p>
 
-          <p className="user-email">{user?.email}</p>
+          <p className="user-email">  
+             Hola, {user?.displayName ?? user?.email}
+          </p>
         </div>
 
         <button
