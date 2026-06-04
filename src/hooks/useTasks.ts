@@ -42,12 +42,17 @@ export const useTasks = () => {
     return () => unsubscribe();
   }, [user, authLoading]);
 
-  const addTask = async (title: string, description: string) => {
+  const addTask = async (
+    title: string,
+    description: string,
+    priority: "low" | "medium" | "high"
+  ) => {
     if (!user) return;
 
     await createTask({
       title,
       description,
+      priority,
       userId: user.uid,
     });
   };

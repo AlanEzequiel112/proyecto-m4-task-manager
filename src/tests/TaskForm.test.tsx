@@ -18,10 +18,14 @@ describe("TaskForm", () => {
 
     await user.click(screen.getByRole("button", { name: "Crear tarea" }));
 
-    expect(onAddTask).toHaveBeenCalledWith("Tarea test", "Descripción test");
+    expect(onAddTask).toHaveBeenCalledWith(
+      "Tarea test",
+      "Descripción test",
+      "medium"
+    );
   });
 
-  it("envía la tarea con título y descripción", async () => {
+  it("envía la tarea con título, descripción y prioridad", async () => {
     const user = userEvent.setup();
     const onAddTask = vi.fn().mockResolvedValue(undefined);
 
@@ -33,8 +37,14 @@ describe("TaskForm", () => {
       "Descripción test"
     );
 
+    await user.selectOptions(screen.getByRole("combobox"), "high");
+
     await user.click(screen.getByRole("button", { name: "Crear tarea" }));
 
-    expect(onAddTask).toHaveBeenCalledWith("Tarea test", "Descripción test");
+    expect(onAddTask).toHaveBeenCalledWith(
+      "Tarea test",
+      "Descripción test",
+      "high"
+    );
   });
 });

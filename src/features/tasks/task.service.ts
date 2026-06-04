@@ -17,6 +17,7 @@ const TASKS_COLLECTION = "tasks";
 interface CreateTaskData {
   title: string;
   description: string;
+  priority: "low" | "medium" | "high";
   userId: string;
 }
 
@@ -52,6 +53,7 @@ export const createTask = async (data: CreateTaskData) => {
   await addDoc(collection(db, TASKS_COLLECTION), {
     title: data.title,
     description: data.description,
+    priority: data.priority,
     userId: data.userId,
     completed: false,
     createdAt: Date.now(),
