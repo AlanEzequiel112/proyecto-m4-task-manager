@@ -1,151 +1,245 @@
-# Task Manager - PI M4
+# 🚀 Task Manager
 
-## Descripción
+Aplicación web desarrollada con React + TypeScript para gestionar tareas personales de forma simple y organizada.
 
-Task Manager es una aplicación web SPA desarrollada con React y TypeScript que permite a los usuarios gestionar sus tareas personales de forma segura y persistente.
+Permite registrar usuarios, iniciar sesión mediante correo electrónico o Google, administrar tareas con prioridades y fechas límite, y recibir un resumen actualizado por email.
 
-La aplicación incluye autenticación de usuarios, almacenamiento de tareas en la nube mediante Firebase Firestore y envío de resúmenes por correo electrónico utilizando AWS SES.
+---
 
-## Tecnologías utilizadas
+## 🌐 Demo
 
-* React
-* TypeScript
-* Firebase Authentication
-* Cloud Firestore
-* AWS SES
-* Vercel Functions
-* Vitest
-* React Testing Library
-* Vercel
+**Aplicación desplegada en Vercel**
 
-## Funcionalidades
+https://task-manager-pi-m4.vercel.app
+
+---
+
+## ✨ Funcionalidades
 
 ### Autenticación
 
-* Registro de usuarios mediante email y contraseña.
-* Inicio y cierre de sesión.
-* Persistencia de sesión.
-* Manejo de errores de autenticación.
+- Registro de usuarios con email y contraseña.
+- Inicio de sesión con email y contraseña.
+- Inicio de sesión mediante Google.
+- Cierre de sesión seguro.
 
 ### Gestión de tareas
 
-* Crear tareas.
-* Editar tareas.
-* Eliminar tareas.
-* Marcar tareas como completadas.
-* Persistencia en Cloud Firestore.
-* Separación de tareas por usuario autenticado.
-* Actualización automática de la interfaz mediante Firestore.
+- Crear tareas.
+- Visualizar tareas.
+- Marcar tareas como completadas.
+- Marcar tareas como pendientes.
+- Eliminar tareas.
 
-### Email
+### Organización
 
-* Envío de resumen de tareas por correo electrónico.
-* Integración con AWS SES mediante Vercel Functions.
-* Protección de credenciales mediante variables de entorno.
+- Prioridad Alta, Media y Baja.
+- Fecha límite para cada tarea.
+- Filtros de tareas:
+  - Todas
+  - Pendientes
+  - Completadas
+- Ordenamiento por prioridad.
 
-## Arquitectura
+### Resumen por email
 
-El proyecto se encuentra organizado por responsabilidades:
+- Envío de resumen actualizado mediante AWS SES.
+- Conteo de tareas completadas y pendientes.
+- Listado detallado del estado de cada tarea.
+
+---
+
+## 🛠 Tecnologías utilizadas
+
+### Frontend
+
+- React
+- TypeScript
+- Vite
+
+### Backend / Servicios
+
+- Firebase Authentication
+- Cloud Firestore
+- AWS SES
+- Vercel Serverless Functions
+
+### Testing
+
+- Vitest
+- Testing Library
+
+### Deploy
+
+- Vercel
+
+---
+
+## 📂 Estructura del proyecto
 
 ```text
-src/
-├─ components/
-├─ hooks/
-├─ pages/
-├─ services/
-├─ tests/
-├─ types/
-└─ utils/
-
-api/
-└─ send-task-summary.ts
+task-manager-pi-m4
+│
+├── api
+│   └── send-task-summary.ts
+│
+├── public
+│
+├── screenshots
+│   ├── login.png
+│   ├── dashboard.png
+│   └── email.png
+│
+├── src
+├── api
+├── package.json
+└── README.md
+│
+├── src
+│   ├── components
+│   │   ├── TaskForm.tsx
+│   │   └── TaskList.tsx
+│   │
+│   ├── features
+│   │   ├── auth
+│   │   │   └── auth.service.ts
+│   │   │
+│   │   └── tasks
+│   │       └── task.service.ts
+│   │
+│   ├── hooks
+│   │   ├── useAuth.ts
+│   │   └── useTasks.ts
+│   │
+│   ├── pages
+│   │   ├── DashboardPage.tsx
+│   │   ├── LoginPage.tsx
+│   │   └── RegisterPage.tsx
+│   │
+│   ├── routes
+│   │   └── ProtectedRoute.tsx
+│   │
+│   ├── services
+│   │   ├── email.service.ts
+│   │   └── firebase.ts
+│   │
+│   ├── tests
+│   │   ├── firebaseErrors.test.ts
+│   │   ├── TaskForm.test.tsx
+│   │   └── TaskList.test.tsx
+│   │
+│   ├── types
+│   │   └── Task.ts
+│   │
+│   └── utils
+│       └── firebaseErrors.ts
+│
+├── package.json
+└── README.md
 ```
 
-### Decisiones arquitectónicas
+---
 
-* Firebase Authentication para gestionar usuarios.
-* Cloud Firestore para persistencia en tiempo real.
-* AWS SES para envío de correos.
-* Vercel Functions para proteger credenciales AWS.
-* TypeScript para mejorar el tipado y reducir errores.
-* Testing con Vitest y React Testing Library.
+## ⚙️ Instalación local
 
-## Instalación
-
-Clonar el repositorio:
+### Clonar repositorio
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
-cd task-manager-pi-m4
+git clone https://github.com/AlanEzequiel112/proyecto-m4-task-manager.git
 ```
 
-Instalar dependencias:
+### Ingresar al proyecto
+
+```bash
+cd proyecto-m4-task-manager
+```
+
+### Instalar dependencias
 
 ```bash
 npm install
 ```
 
-Ejecutar en desarrollo:
+### Crear variables de entorno
+
+Crear un archivo `.env` utilizando `.env.example` como referencia.
+
+### Ejecutar proyecto
 
 ```bash
 npm run dev
 ```
 
-Ejecutar tests:
+---
+
+## 🧪 Tests
+
+Ejecutar todos los tests:
 
 ```bash
 npm run test:run
 ```
 
-Generar build:
+---
 
-```bash
-npm run build
-```
+## 📸 Capturas
 
-## Variables de entorno
+### Login
 
-```env
-VITE_FIREBASE_API_KEY=
-VITE_FIREBASE_AUTH_DOMAIN=
-VITE_FIREBASE_PROJECT_ID=
-VITE_FIREBASE_STORAGE_BUCKET=
-VITE_FIREBASE_MESSAGING_SENDER_ID=
-VITE_FIREBASE_APP_ID=
+![Login](./screenshots/login.png)
 
-AWS_REGION=
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_SES_FROM_EMAIL=
-```
+### Dashboard
 
-## Flujo de envío de emails
+![Dashboard](./screenshots/dashboard.png)
 
-1. El usuario presiona "Enviar resumen".
-2. La aplicación invoca una Vercel Function.
-3. La función genera el resumen de tareas.
-4. AWS SES envía el correo electrónico.
-5. El usuario recibe el resumen en su bandeja de entrada.
+### Resumen por email
 
-## Testing
+![Email](./screenshots/email.png)
 
-Actualmente el proyecto incluye:
+---
 
-* Tests unitarios para manejo de errores de Firebase.
-* Tests de componente para TaskForm.
+## 🤖 Uso de Inteligencia Artificial
 
-## URL de producción
+Durante el desarrollo se utilizaron herramientas de Inteligencia Artificial como apoyo para:
 
-https://task-manager-pi-m4.vercel.app
+- Resolver errores de configuración.
+- Organizar la estructura del proyecto.
+- Diseñar componentes y estilos.
+- Implementar funcionalidades con Firebase.
+- Integrar AWS SES.
+- Crear y corregir tests.
+- Mejorar la experiencia de usuario.
 
-## Uso de Inteligencia Artificial
+### Ejemplos de prompts utilizados
 
-Durante el desarrollo se utilizó ChatGPT como herramienta de apoyo para:
+- "¿Cómo integrar Firebase Authentication con React y TypeScript?"
+- "¿Cómo enviar emails utilizando AWS SES desde una función serverless en Vercel?"
+- "¿Cómo organizar un proyecto React utilizando hooks y services?"
+- "¿Cómo crear tests para componentes React utilizando Vitest y Testing Library?"
 
-* Resolución de errores de integración.
-* Configuración de Firebase y AWS SES.
-* Implementación de testing con Vitest.
-* Organización de la arquitectura del proyecto.
-* Revisión de buenas prácticas y documentación.
+### Influencia en la implementación
 
-Las respuestas generadas fueron analizadas y adaptadas antes de incorporarse al proyecto, priorizando siempre la comprensión del código implementado.
+Las respuestas obtenidas sirvieron como guía para:
+
+- Comprender tecnologías nuevas.
+- Resolver problemas específicos.
+- Evaluar diferentes alternativas de implementación.
+
+### Decisiones tomadas
+
+A partir de la información obtenida se decidió:
+
+- Utilizar Firebase Authentication para la gestión de usuarios.
+- Utilizar Firestore como base de datos.
+- Utilizar AWS SES para el envío de emails.
+- Implementar autenticación con Google.
+- Incorporar prioridades y fechas límite para mejorar la organización de tareas.
+- Mantener una arquitectura modular basada en componentes, hooks y servicios.
+
+---
+
+## 👨‍💻 Autor
+
+**Ezequiel Cardiello**
+
+Proyecto Integrador M4 - Henry
