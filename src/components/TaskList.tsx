@@ -12,9 +12,9 @@ export function TaskList({ tasks, onToggleTask, onDeleteTask }: TaskListProps) {
   }
 
   return (
-    <ul>
+    <ul className="task-list"> 
       {tasks.map((task) => (
-        <li key={task.id}>
+        <li className="task-card" key={task.id}>
           <h3>{task.title}</h3>
           <p>{task.description}</p>
           <p>Estado: {task.completed ? "Completada" : "Pendiente"}</p>

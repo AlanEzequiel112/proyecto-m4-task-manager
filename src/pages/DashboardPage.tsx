@@ -13,6 +13,9 @@ export function DashboardPage() {
   const [emailStatus, setEmailStatus] = useState("");
   const [isSendingEmail, setIsSendingEmail] = useState(false);
 
+  const completedTasks = tasks.filter((task) => task.completed).length;
+  const pendingTasks = tasks.length - completedTasks;
+
   const handleLogout = async () => {
     await logoutUser();
   };
@@ -41,34 +44,55 @@ export function DashboardPage() {
   };
 
   return (
-    <main>
-      <header>
-        <h1>Mis tareas</h1>
-        <p>Sesión iniciada como: {user?.email}</p>
+    <main className="app-layout">
+      <header className="dashboard-header">
+        <div>
+          <h1>Task Manager</h1>
+          <p className="subtitle">
+            Organizá tus tareas y mantené el control de tus pendientes.
+          </p>
+          <p className="user-email">{user?.email}</p>
+        </div>
 
-        <button type="button" onClick={handleLogout}>
+        <button className="btn-secondary" type="button" onClick={handleLogout}>
           Cerrar sesión
         </button>
       </header>
 
-      <section>
-        <h2>Resumen por email</h2>
+      <section className="stats">
+        <div className="stat-card">
+          <span>Pendientes</span>
+          <strong>{pendingTasks}</strong>
+        </div>
+
+        <div className="stat-card">
+          <span>Completadas</span>
+          <strong>{completedTasks}</strong>
+        </div>
+      </section>
+
+      <section className="email-card">
+        <div>
+          <h2>Resumen por email</h2>
+          <p>Recibí un resumen actualizado del estado de tus tareas.</p>
+        </div>
 
         <button
+          className="btn-primary"
           type="button"
           onClick={handleSendSummary}
           disabled={isSendingEmail || tasks.length === 0}
         >
-          {isSendingEmail ? "Enviando..." : "Enviar resumen por email"}
+          {isSendingEmail ? "Enviando..." : "Enviarme resumen"}
         </button>
 
-        {emailStatus && <p>{emailStatus}</p>}
+        {emailStatus && <p className="status-message">{emailStatus}</p>}
       </section>
 
       <TaskForm onAddTask={addTask} />
 
-      {loading && <p>Cargando tareas...</p>}
-      {error && <p>{error}</p>}
+      {loading && <p className="status-message">Cargando tareas...</p>}
+      {error && <p className="status-message error-message">{error}</p>}
 
       {!loading && (
         <TaskList

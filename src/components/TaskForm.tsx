@@ -34,10 +34,11 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="task-form" onSubmit={handleSubmit}>
       <h2>Nueva tarea</h2>
 
       <input
+        className="input"
         type="text"
         placeholder="Título"
         value={title}
@@ -46,6 +47,7 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
       />
 
       <textarea
+        className="textarea"
         placeholder="Descripción"
         value={description}
         onChange={(event) => setDescription(event.target.value)}
@@ -54,7 +56,11 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
 
       {errorMessage && <p>{errorMessage}</p>}
 
-      <button type="submit" disabled={isSubmitting}>
+       <button
+           className="btn-primary"
+           type="submit"
+           disabled={isSubmitting}
+>
         {isSubmitting ? "Guardando..." : "Crear tarea"}
       </button>
     </form>

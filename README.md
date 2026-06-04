@@ -1,73 +1,151 @@
-# React + TypeScript + Vite
+# Task Manager - PI M4
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Descripción
 
-Currently, two official plugins are available:
+Task Manager es una aplicación web SPA desarrollada con React y TypeScript que permite a los usuarios gestionar sus tareas personales de forma segura y persistente.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+La aplicación incluye autenticación de usuarios, almacenamiento de tareas en la nube mediante Firebase Firestore y envío de resúmenes por correo electrónico utilizando AWS SES.
 
-## React Compiler
+## Tecnologías utilizadas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* React
+* TypeScript
+* Firebase Authentication
+* Cloud Firestore
+* AWS SES
+* Vercel Functions
+* Vitest
+* React Testing Library
+* Vercel
 
-## Expanding the ESLint configuration
+## Funcionalidades
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Autenticación
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* Registro de usuarios mediante email y contraseña.
+* Inicio y cierre de sesión.
+* Persistencia de sesión.
+* Manejo de errores de autenticación.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Gestión de tareas
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+* Crear tareas.
+* Editar tareas.
+* Eliminar tareas.
+* Marcar tareas como completadas.
+* Persistencia en Cloud Firestore.
+* Separación de tareas por usuario autenticado.
+* Actualización automática de la interfaz mediante Firestore.
+
+### Email
+
+* Envío de resumen de tareas por correo electrónico.
+* Integración con AWS SES mediante Vercel Functions.
+* Protección de credenciales mediante variables de entorno.
+
+## Arquitectura
+
+El proyecto se encuentra organizado por responsabilidades:
+
+```text
+src/
+├─ components/
+├─ hooks/
+├─ pages/
+├─ services/
+├─ tests/
+├─ types/
+└─ utils/
+
+api/
+└─ send-task-summary.ts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Decisiones arquitectónicas
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+* Firebase Authentication para gestionar usuarios.
+* Cloud Firestore para persistencia en tiempo real.
+* AWS SES para envío de correos.
+* Vercel Functions para proteger credenciales AWS.
+* TypeScript para mejorar el tipado y reducir errores.
+* Testing con Vitest y React Testing Library.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Instalación
+
+Clonar el repositorio:
+
+```bash
+git clone <URL_DEL_REPOSITORIO>
+cd task-manager-pi-m4
 ```
+
+Instalar dependencias:
+
+```bash
+npm install
+```
+
+Ejecutar en desarrollo:
+
+```bash
+npm run dev
+```
+
+Ejecutar tests:
+
+```bash
+npm run test:run
+```
+
+Generar build:
+
+```bash
+npm run build
+```
+
+## Variables de entorno
+
+```env
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+
+AWS_REGION=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_SES_FROM_EMAIL=
+```
+
+## Flujo de envío de emails
+
+1. El usuario presiona "Enviar resumen".
+2. La aplicación invoca una Vercel Function.
+3. La función genera el resumen de tareas.
+4. AWS SES envía el correo electrónico.
+5. El usuario recibe el resumen en su bandeja de entrada.
+
+## Testing
+
+Actualmente el proyecto incluye:
+
+* Tests unitarios para manejo de errores de Firebase.
+* Tests de componente para TaskForm.
+
+## URL de producción
+
+https://task-manager-pi-m4.vercel.app
+
+## Uso de Inteligencia Artificial
+
+Durante el desarrollo se utilizó ChatGPT como herramienta de apoyo para:
+
+* Resolución de errores de integración.
+* Configuración de Firebase y AWS SES.
+* Implementación de testing con Vitest.
+* Organización de la arquitectura del proyecto.
+* Revisión de buenas prácticas y documentación.
+
+Las respuestas generadas fueron analizadas y adaptadas antes de incorporarse al proyecto, priorizando siempre la comprensión del código implementado.
