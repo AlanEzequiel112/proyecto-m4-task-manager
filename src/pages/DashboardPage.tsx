@@ -25,18 +25,36 @@ export function DashboardPage() {
     "all" | "pending" | "completed"
   >("all");
 
+  const [sortByPriority, setSortByPriority] =
+    useState(false);
+
   const completedTasks = tasks.filter(
     (task) => task.completed
   ).length;
 
   const pendingTasks = tasks.length - completedTasks;
 
-  const filteredTasks = tasks.filter((task) => {
-    if (filter === "pending") return !task.completed;
-    if (filter === "completed") return task.completed;
+  const filteredTasks = tasks
+    .filter((task) => {
+      if (filter === "pending") return !task.completed;
+      if (filter === "completed") return task.completed;
 
-    return true;
-  });
+      return true;
+    })
+    .sort((a, b) => {
+      if (!sortByPriority) return 0;
+
+      const priorities = {
+        high: 3,
+        medium: 2,
+        low: 1,
+      };
+
+      return (
+        priorities[b.priority ?? "medium"] -
+        priorities[a.priority ?? "medium"]
+      );
+    });
 
   const handleLogout = async () => {
     await logoutUser();
@@ -163,6 +181,21 @@ export function DashboardPage() {
             onClick={() => setFilter("completed")}
           >
             Completadas
+          </button>
+
+          <button
+            className={
+              sortByPriority
+                ? "filter-btn active"
+                : "filter-btn"
+            }
+            onClick={() =>
+              setSortByPriority(!sortByPriority)
+            }
+          >
+            {sortByPriority
+              ? "Prioridad activa"
+              : "Ordenar por prioridad"}
           </button>
         </div>
       </section>
